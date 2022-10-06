@@ -106,6 +106,12 @@ public class Puzzle
     // Return true if the grid is symmetric (à la New York Times); false otherwise (4 marks)
     public bool Symmetric() 
     {
+        for (int j = 0; j < N; j++)
+            for (int i = 0; i < (N - N % 2) / 2; i++)
+                if (grid[j,i].Color != grid[j, N - (1 + i)].Color)
+                {
+                    return false;
+                }
         return true;
     
     }
@@ -118,7 +124,8 @@ public class Program
     {
         Puzzle p = new Puzzle(3);
        
-        p.Initialize(10);
+        p.Initialize(2);
+        Console.WriteLine(p.Symmetric());
         p.PrintGrid();
 
 
