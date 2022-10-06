@@ -97,10 +97,6 @@ public class Puzzle
             }
         }
 
-
-
-
-
     }
 
     // Return true if the grid is symmetric (à la New York Times); false otherwise (4 marks)
@@ -118,16 +114,3 @@ public class Puzzle
 }
 
 
-public class Program
-{
-    public static void Main()
-    {
-        Puzzle p = new Puzzle(3);
-       
-        p.Initialize(2);
-        Console.WriteLine(p.Symmetric());
-        p.PrintGrid();
-
-
-    }
-}
