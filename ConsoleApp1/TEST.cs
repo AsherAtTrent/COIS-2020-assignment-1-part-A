@@ -12,9 +12,13 @@
         }
         else
         {
-            char[] a = { };
+            char[] a = { 'a','b','c','d'};
             MyString s = new MyString(a);
             s.Print();
+            Console.WriteLine(s.IndexOf('d'));
+            Console.WriteLine(s.IndexOf('b'));
+            Console.WriteLine(s.IndexOf('c'));
+            Console.WriteLine(s.IndexOf('a'));
         }
        
 

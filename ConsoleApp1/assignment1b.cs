@@ -24,6 +24,7 @@
         {
             p.next = new Node();
             p.next.item = A[i];
+            length++;
             p = p.next;
         }
 
@@ -34,14 +35,25 @@
     // Using a stack, reverse this instance of MyString (6 marks)
     public void Reverse() 
     { 
-        Stack<char> S; 
+        Stack<char> S;
     }
 
 
     // Return the index of the first occurrence of c in this instance; otherwise -1 (4 marks)
     public int IndexOf(char c)
     {
-        return 0;
+        Node p = front.next;
+        int index = -1;
+        while(p != null)
+        {
+            index++;
+            if (p.item == c)
+            {
+                return index;
+            }
+            p=p.next;
+        }
+        return index;
     }
 
 
@@ -56,7 +68,7 @@
     // otherwise false (6 marks)
     public override bool Equals(object obj) 
     {
-        return true;
+        return false;
     }
 
     // Print out this instance of MyString (3 marks)
@@ -68,6 +80,7 @@
         {
             Console.Write(p.item);
             p=p.next;
+
         }
         Console.WriteLine();
     }
