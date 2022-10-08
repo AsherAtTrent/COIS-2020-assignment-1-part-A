@@ -7,22 +7,41 @@ public class assignment1
         
         //Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
         
-        Console.WriteLine("press x to exit, press a for assignment a, press b for assignment b");
         ConsoleKeyInfo keyinfo;
         bool mainmenu = true;
-        while(mainmenu)
-        {
+        bool partAMenu = false;
+        bool partBMenu = false;
 
-            keyinfo = Console.ReadKey(); 
+        
+        while (mainmenu)
+        {
+            Console.WriteLine("press x to exit, press a for assignment a, press b for assignment b");
+            keyinfo = Console.ReadKey();
             if (keyinfo.KeyChar == 'a')
             {
+                partAMenu = true;
                 Console.Clear();
-                Puzzle p = new Puzzle(5);
-                p.Initialize(1);
-                Console.WriteLine(p.Symmetric());
-                Console.WriteLine(p.Sym());
-                p.PrintGrid();
-                p.printSymmetric();
+                while (partAMenu)
+                {
+                    Console.WriteLine("press x to exit to main menu, press 0 for userinput");
+                    keyinfo = Console.ReadKey();
+                    if (keyinfo.KeyChar =='0')
+                    {
+                        Console.Clear();
+                        Puzzle p = new Puzzle(5);
+                        p.Initialize(1);
+                        Console.WriteLine(p.Symmetric());
+                        Console.WriteLine(p.Sym());
+                        p.PrintGrid();
+                        p.printSymmetric();
+                    }
+                    else if(keyinfo.KeyChar == 'x')
+                    {
+                        partAMenu = false;
+                    }
+
+                }
+                
             }
             else if(keyinfo.KeyChar == 'b')
             {
@@ -48,9 +67,13 @@ public class assignment1
                 Console.WriteLine(s.Equals(test2));
                 Console.WriteLine(test3.Equals(test4));
             }
-            Console.WriteLine("press x to exit, press a for assignment a, press b for assignment b");
-        }
-        
+            else if (keyinfo.KeyChar == 'x')
+            {
+                mainmenu = false;
+            }
 
+            
+        }
     }
+
 }

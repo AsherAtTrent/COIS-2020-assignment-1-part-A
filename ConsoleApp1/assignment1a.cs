@@ -130,7 +130,6 @@ public class Puzzle
         {
             for (int i = 0; i <N; i++)
             {
-                Console.WriteLine("[{0},{1}]", j, i);
                 if (grid[j, i].Color != grid[(N - 1) - j, (N - 1) - i].Color)//compares current item, to item 180 degree away
                 {
                     return false;
@@ -145,7 +144,6 @@ public class Puzzle
     {
         //one before the middle element of an odd size 2d array, or the final element in the middle row of an even size 2d array
         int middwayItem = ((N * N) - (2 * N % 2)) / 2;
-        Console.WriteLine(middwayItem);
         for (int i = 0; i != middwayItem; i++) 
         {
             int x = i / N;//current x is calculated by truncated value of i/N
