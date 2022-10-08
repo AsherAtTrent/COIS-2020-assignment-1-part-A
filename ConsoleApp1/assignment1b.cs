@@ -27,7 +27,6 @@
             length++;
             p = p.next;
         }
-
     }
 
 

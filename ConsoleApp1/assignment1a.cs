@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Net.Mime.MediaTypeNames;
 
 public enum TColor { WHITE, BLACK };
 public class Square
@@ -15,17 +16,22 @@ public class Square
 public class Puzzle
 {
     private Square[,] grid;
+
     private int N;
 
     /// <summary>
     /// Takes in a parameter N, then creates an N by N grid of initially all white squares.
     /// </summary>
-    /// 
     /// <param name="N"></param>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     // Create an NxN crossword grid of WHITE squares (4 marks)
     public Puzzle(int N)
     {
         //maybe throw an exception if n is not atleast 1?
+        if (N<0)
+        {
+            throw new ArgumentOutOfRangeException("puzzle size must be greater than 0");
+        }
         this.N = N;
         grid = new Square[N, N];
         for (int j = 0; j < N; j++)
@@ -44,12 +50,10 @@ public class Puzzle
     {
         if (M > (N * N))
         {
-            
             throw new InvalidOperationException("cannot have more black squares than white");
         }
         else
         {
-
             Random rand = new Random();
             while (M != 0)
             {
@@ -88,11 +92,10 @@ public class Puzzle
     {
         for(int a = 0; a < N; a++)
                 Console.Write(" - |");
+
         for (int j = 0; j < N; j++)
         {
             Console.WriteLine();
-            
-             
             for (int i = 0; i < N; i++)
             {
                 if (grid[j, i].Number != -1)
@@ -104,13 +107,13 @@ public class Puzzle
                 {
                     Console.Write(" X");
                 }
-
                 else
                 {
                     Console.Write("  ");
                 }
                 Console.Write(" |");
             }
+
             Console.WriteLine();
             for (int a = 0; a < N; a++)
                 Console.Write(" - |");
@@ -120,21 +123,41 @@ public class Puzzle
 
     // Return true if the grid is symmetric (à la New York Times); false otherwise (4 marks)
 
-    public bool Symmetric() 
+    public bool Symmetric()
     {
-        for (int i = N - 1; i >= 0; i--)
+        //nested forloop goes through each item, until middle row has been compared   
+        for (int j = 0; j<= (N/2); j++) // n/2 truncates to give middlerow
         {
-            for (int j = N - 1; j >= 0; j--)
+            for (int i = 0; i <N; i++)
             {
-                if (grid[i, j].Color != grid[(N - 1) - i, (N - 1) - j].Color)
+                Console.WriteLine("[{0},{1}]", j, i);
+                if (grid[j, i].Color != grid[(N - 1) - j, (N - 1) - i].Color)//compares current item, to item 180 degree away
                 {
                     return false;
-                }
+                }   
+            }  
+        }
+        
+        return true;   
+    }
+
+    public bool Sym()
+    {
+        //one before the middle element of an odd size 2d array, or the final element in the middle row of an even size 2d array
+        int middwayItem = ((N * N) - (2 * N % 2)) / 2;
+        Console.WriteLine(middwayItem);
+        for (int i = 0; i != middwayItem; i++) 
+        {
+            int x = i / N;//current x is calculated by truncated value of i/N
+            int y = i % N;//current y is calculated by reminder of i%N
+            if (grid[x, y].Color != grid[(N - 1) - x, (N - 1) - y].Color)//compares current item, to item 180 degree away
+            {
+                return false;
             }
         }
         return true;
-
     }
+
     public void printSymmetric()
     {
         Console.WriteLine();
@@ -144,8 +167,6 @@ public class Puzzle
             {
                 Console.Write(grid[i, j].Color + " ");
             }
-                
-                
             Console.WriteLine();
         }
     }
