@@ -11,6 +11,7 @@ public class assignment1
             p.Initialize(2);
             Console.WriteLine(p.Symmetric());
             p.PrintGrid();
+            p.printSymmetric();
         }
         else
         {      
