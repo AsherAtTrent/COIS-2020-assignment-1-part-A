@@ -1,6 +1,4 @@
-﻿using System.Runtime.Intrinsics.Arm;
-
-public class assignment1
+﻿public class assignment1
 {
     public static void Main()
     {

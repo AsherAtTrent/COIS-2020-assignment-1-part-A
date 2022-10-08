@@ -1,7 +1,4 @@
-﻿using System;
-using static System.Net.Mime.MediaTypeNames;
-
-public enum TColor { WHITE, BLACK };
+﻿public enum TColor { WHITE, BLACK };
 public class Square
 {
     public TColor Color { set; get; } // Either WHITE or BLACK
