@@ -79,7 +79,6 @@
     // otherwise false (6 marks)
     public override bool Equals(object obj) 
     {
-
         if (obj is MyString)
         {
             MyString toCompare = (MyString)obj;

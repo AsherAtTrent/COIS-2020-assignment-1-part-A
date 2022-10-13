@@ -83,7 +83,10 @@
         MyString test4 = new MyString(d);
         Console.WriteLine(s.Equals(test));
         Console.WriteLine(s.Equals(test2));
+        
         Console.WriteLine(test3.Equals(test4));
+        MyString? v = null;
+        Console.WriteLine("when comparing against null answer is: "+ s.Equals(v));
     }
 
 }
