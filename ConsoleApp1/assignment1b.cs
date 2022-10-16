@@ -90,7 +90,6 @@
         //TODO
     }
 
-
     
     /// <summary>
     /// Return true if obj is both of type MyString and the same as this instance; otherwise false

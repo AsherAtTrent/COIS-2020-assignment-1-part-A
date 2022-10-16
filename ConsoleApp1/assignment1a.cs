@@ -16,6 +16,8 @@ public class Puzzle
 
     private int N;
 
+    private int M;
+
     /// <summary>
     /// Takes in a parameter N, then creates an N by N grid of initially all white squares.
     /// </summary>
@@ -47,7 +49,7 @@ public class Puzzle
     /// <exception cref="InvalidOperationException"></exception>
     public void Initialize(int M)
     {
-        if (M < 0) //if M is negatiev throw exception
+        if (M < 0) //if M is negative throw exception
         {
             throw new InvalidOperationException("cannot have negative black squares");
         }
@@ -57,6 +59,7 @@ public class Puzzle
         }
         else
         {
+
             Random rand = new Random(); 
             while (M != 0) // while not all of the #blacksquares have been put in ...
             {
