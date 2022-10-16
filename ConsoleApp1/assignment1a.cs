@@ -3,7 +3,7 @@ public class Square
 {
     public TColor Color { set; get; } // Either WHITE or BLACK
     public int Number { set; get; } // Either a clue number or -1 (Note: A BLACK square is always -1)
-    public Square()                // Initialize a square to WHITE and its clue number to -1 (2 marks)
+    public Square()                // Initialize a square to WHITE and its clue number to -1 
     {
         Color = TColor.WHITE;
         Number = -1;
@@ -12,28 +12,29 @@ public class Square
 
 public class Puzzle
 {
-    private Square[,] grid;
+    private Square[,] grid; 
 
     private int N;
 
     /// <summary>
     /// Takes in a parameter N, then creates an N by N grid of initially all white squares.
     /// </summary>
+    /// 
     /// <param name="N"></param>
+    /// 
     /// <exception cref="ArgumentOutOfRangeException"></exception>
-    // Create an NxN crossword grid of WHITE squares (4 marks)
     public Puzzle(int N)
     {
-        //maybe throw an exception if n is not atleast 1?
+        //throws exception if number of squares isnt atleast 1
         if (N<0)
         {
             throw new ArgumentOutOfRangeException("puzzle size must be greater than 0");
         }
         this.N = N;
-        grid = new Square[N, N];
+        grid = new Square[N, N]; // creates a new array delegated to be squares
         for (int j = 0; j < N; j++)
             for (int i = 0; i < N; i++)
-                grid[j, i] = new Square();
+                grid[j, i] = new Square(); // calls square constructer on each index
     }
     /// <summary>
     /// Takes in a parameter M, then adds M amount of black squares to the Puzzle object that called this method.
@@ -41,22 +42,23 @@ public class Puzzle
     /// </summary>
     /// 
     /// <param name="M"></param>
+    /// 
     /// <exception cref="InvalidOperationException"></exception>
-    // Randomly initialize a crossword grid with M black squares (5 marks)
     public void Initialize(int M)
     {
-        if (M > (N * N))
+        if (M > (N * N)) // if m is greater than available amount of black squares throw exception
         {
             throw new InvalidOperationException("cannot have more black squares than white");
         }
         else
         {
-            Random rand = new Random();
-            while (M != 0)
+            Random rand = new Random(); 
+            while (M != 0) // while not all of the #blacksquares have been put in ...
             {
+                //pick a random x and y value 
                 int x = rand.Next(0, N);
-                int y = rand.Next(0, N);
-                if (grid[x, y].Color != TColor.BLACK)
+                int y = rand.Next(0, N); 
+                if (grid[x, y].Color != TColor.BLACK) // if the grid that that x and y ISNT black already, make it black and subtract #blacksquares still needed
                 {
                     grid[x, y].Color = TColor.BLACK;
                     M--;
@@ -84,16 +86,17 @@ public class Puzzle
     /// Prints out Puzzle object that called this method onto the console, seperating each row with dashes.
     /// Black squares are denoted with X, Numbered white squares are denoted by their number, and white squares are depicted as blank spots.
     /// </summary>
-    // Print out the crossword grid including the BLACK squares and clue numbers (5 marks)
     public void PrintGrid()
     {
-        for(int a = 0; a < N; a++)
+        for(int a = 0; a < N; a++) // makes top row of dashes and lines
                 Console.Write(" - |");
 
-        for (int j = 0; j < N; j++)
+        //for loop that will go through each 
+        for (int j = 0; j < N; j++) // goes through each row, doing a writeline to break into next line
         {
             Console.WriteLine();
-            for (int i = 0; i < N; i++)
+
+            for (int i = 0; i < N; i++)//goes through each column, using write() based on number and colour, and then to draw a line
             {
                 if (grid[j, i].Number != -1)
                 {
@@ -111,7 +114,7 @@ public class Puzzle
                 Console.Write(" |");
             }
 
-            Console.WriteLine();
+            Console.WriteLine(); //a bottom row of dashes and lines
             for (int a = 0; a < N; a++)
                 Console.Write(" - |");
         }
@@ -120,6 +123,11 @@ public class Puzzle
 
     // Return true if the grid is symmetric (à la New York Times); false otherwise (4 marks)
 
+    /// <summary>
+    /// checks if the puzzle object that called this method has 180 degree rotational symmetry. returns true if symmetrical false otherwise.
+    /// </summary>
+    /// 
+    /// <returns>boolean</returns>
     public bool Symmetric()
     {
         //nested forloop goes through each item, until middle row has been compared   
@@ -127,7 +135,7 @@ public class Puzzle
         {
             for (int i = 0; i <N; i++)
             {
-                if (grid[j, i].Color != grid[(N - 1) - j, (N - 1) - i].Color)//compares current item, to item 180 degree away
+                if (grid[j, i].Color != grid[(N - 1) - j, (N - 1) - i].Color)//compares current item, to its 180 degree counterpart
                 {
                     return false;
                 }   
@@ -137,17 +145,25 @@ public class Puzzle
         return true;   
     }
 
-    public bool Sym()
+    /// <summary>
+    /// checks if the puzzle object that called this method has 180 degree rotational symmetry. returns true if symmetrical false otherwise.
+    /// </summary>
+    /// 
+    /// <returns>boolean</returns>
+    public bool Sym() //goes through half the square objects in the puzzle grid, comparing against its 180 degree counterpart
     {
-        //one before the middle element of an odd size 2d array, or the final element in the middle row of an even size 2d array
-        int middwayItem = ((N * N) - (2 * N % 2)) / 2;
-        for (int i = 0; i != middwayItem; i++) 
+        //one before the middle element of an odd size 2d array, or the final element in the middle row of an even size 2d array (half -1 or half of all squares respectively)
+        //this calculation ensures all squares with a 180 degree counterpart are compared exactly once only
+        int middwayItem = ((N * N) - (2 * N % 2)) / 2; 
+       
+        for (int i = 0; i != middwayItem; i++)
         {
-            int x = i / N;//current x is calculated by truncated value of i/N
-            int y = i % N;//current y is calculated by reminder of i%N
-            if (grid[x, y].Color != grid[(N - 1) - x, (N - 1) - y].Color)//compares current item, to item 180 degree away
+            int x = i / N;//current x is calculated by truncated value of i/N, ensuring wraparound of row
+            int y = i % N;//current y is calculated by reminder of i%N, ensuring a wraparound of column
+
+            if (grid[x, y].Color != grid[(N - 1) - x, (N - 1) - y].Color)//compares current item, to its 180 degree counterpart
             {
-                return false;
+                return false; 
             }
         }
         return true;
