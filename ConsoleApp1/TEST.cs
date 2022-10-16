@@ -17,11 +17,11 @@ public class assignment1
             keyinfo = Console.ReadKey();
             if (keyinfo.KeyChar == 'a')
             {
-                a.menuA(keyinfo);
+                a.MenuA(keyinfo);
             }
             else if (keyinfo.KeyChar == 'b')
             {
-                a.menuB(keyinfo);
+                a.MenuB(keyinfo);
             }
             else if (keyinfo.KeyChar == 'x')
             {
@@ -33,7 +33,7 @@ public class assignment1
             }
         } while (mainmenu);
     }
-    public void menuA(ConsoleKeyInfo keyinfo)
+    public void MenuA(ConsoleKeyInfo keyinfo)
     {
         Console.Clear();
         bool focused = true;
@@ -49,7 +49,7 @@ public class assignment1
 
                 do
                 {
-                    puzzleSize = numberChecker(sizeMessage);
+                    puzzleSize = NumberChecker(sizeMessage);
                 } while (!(puzzleSize > 0)); //checks to see if entered value is greater than 0 to avoid exception throw
 
 
@@ -60,12 +60,12 @@ public class assignment1
 
                 do
                 {
-                    blackSquares = numberChecker(blackSqMessage);
+                    blackSquares = NumberChecker(blackSqMessage);
                 } while (blackSquares < 0 || blackSquares > (puzzleSize * puzzleSize));//checks to see if entered value is less than 0 or greater than number of squares to avoid exception
 
                 do
                 {
-                   
+                    Console.Clear();
                     p.Initialize(blackSquares);
                     Console.WriteLine(p.Symmetric());
                     Console.WriteLine(p.Sym());
@@ -91,7 +91,7 @@ public class assignment1
         } while (focused);
         Console.Clear();
     }
-    public void menuB(ConsoleKeyInfo keyinfo)
+    public void MenuB(ConsoleKeyInfo keyinfo)
     {
         Console.Clear();
         bool focused = true;
@@ -257,7 +257,7 @@ public class assignment1
         Console.Clear();
     }
 
-    public int numberChecker(string s)
+    public int NumberChecker(string s)
     {
         int number;
         Console.Clear();

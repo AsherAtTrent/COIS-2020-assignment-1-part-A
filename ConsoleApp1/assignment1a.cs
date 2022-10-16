@@ -18,6 +18,9 @@ public class Puzzle
 
     private int M;
 
+    private int[] acrossClues;
+    private int[] downClues;
+
     /// <summary>
     /// Takes in a parameter N, then creates an N by N grid of initially all white squares.
     /// </summary>
@@ -33,13 +36,24 @@ public class Puzzle
             throw new ArgumentOutOfRangeException("puzzle size must be greater than 0");
         }
         this.N = N;
+        init(N);
+    }
+
+    /// <summary>
+    /// Initializes a grid for the crossword.
+    /// </summary>
+    /// 
+    /// <param name="N"></param>
+    private void init(int N)//this is made into a seperate method, so that Initialize(int M) can be called on the same Puzzle object multiple times to recreate the grid, instead of making new object
+    {
         grid = new Square[N, N]; // creates a new array delegated to be squares
         for (int j = 0; j < N; j++)
             for (int i = 0; i < N; i++)
                 grid[j, i] = new Square(); // calls square constructer on each index
     }
+
     /// <summary>
-    /// Takes in a parameter M, then adds M amount of black squares to the Puzzle object that called this method.
+    /// Takes in a parameter M, then creates M amount of black squares to the Puzzle object that called this method.
     /// If M is Greater than the amount of squares the Puzzle object has, InvalidOperationException is thrown.
     /// If M is less than 0, InvalidOperationException is thrown.
     /// </summary>
@@ -49,6 +63,11 @@ public class Puzzle
     /// <exception cref="InvalidOperationException"></exception>
     public void Initialize(int M)
     {
+        if (this.M != 0) //checks to see if black squares were added to this already, if so resets puzzle object
+        {
+            init(N);
+        }
+
         if (M < 0) //if M is negative throw exception
         {
             throw new InvalidOperationException("cannot have negative black squares");
@@ -59,19 +78,35 @@ public class Puzzle
         }
         else
         {
+            //creates a list of coords and randomly selects a spot 
+            //then removes it from list to ensure the same spot cant be selected again
+            //adds black squares and removes from list, M amount of times
+            this.M = M;
+            int puzzleSize = N* N;
 
-            Random rand = new Random(); 
-            while (M != 0) // while not all of the #blacksquares have been put in ...
+            Random rand = new Random();
+
+            //creates a list of strings with each index being a comma delimited coordinate. ie: (x,y)
+            //will go through the list and add the coords sequentially from 0,0 .. N,N
+            List<string> coords = new List<String>(puzzleSize); 
+            for (int i = 0; i != puzzleSize; i++)
             {
-                //pick a random x and y value 
-                int x = rand.Next(0, N);
-                int y = rand.Next(0, N); 
-                if (grid[x, y].Color != TColor.BLACK) // if the grid that that x and y ISNT black already, make it black and subtract #blacksquares still needed
-                {
-                    grid[x, y].Color = TColor.BLACK;
-                    M--;
-                }
+                int x = i / N;//current x is calculated by truncated value of i/N, ensuring wraparound of row
+                int y = i % N;//current y is calculated by reminder of i%N, ensuring a wraparound of column
+                coords.Add(x + "," + y);
+            } 
+            //generates a random number from 0 to #squares
+            //and then access the List at that random number, splits x and y components of index via comma delimiter,
+            //then removes it that index from list
+            for (int i = M;i != 0; i--)
+            {
+                int randNum = rand.Next(0,i);    
+                
+                string[] randCoords =  coords[randNum].Split(',') ;
+                grid[int.Parse(randCoords[0]),int.Parse( randCoords[1])].Color = TColor.BLACK; //converts string at index[0] and index[1] to x and y coords
+                coords.RemoveAt(randNum);
             }
+            
         }
     }
 
