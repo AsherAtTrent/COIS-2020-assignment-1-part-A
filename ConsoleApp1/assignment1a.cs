@@ -39,6 +39,7 @@ public class Puzzle
     /// <summary>
     /// Takes in a parameter M, then adds M amount of black squares to the Puzzle object that called this method.
     /// If M is Greater than the amount of squares the Puzzle object has, InvalidOperationException is thrown.
+    /// If M is less than 0, InvalidOperationException is thrown.
     /// </summary>
     /// 
     /// <param name="M"></param>
@@ -46,7 +47,11 @@ public class Puzzle
     /// <exception cref="InvalidOperationException"></exception>
     public void Initialize(int M)
     {
-        if (M > (N * N)) // if m is greater than available amount of black squares throw exception
+        if (M < 0) //if M is negatiev throw exception
+        {
+            throw new InvalidOperationException("cannot have negative black squares");
+        }
+        else if (M > (N * N)) // if M is greater than available amount of black squares throw exception
         {
             throw new InvalidOperationException("cannot have more black squares than white");
         }

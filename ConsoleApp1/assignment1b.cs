@@ -35,8 +35,7 @@
     }
 
 
-
-    // Using a stack, reverse this instance of MyString (6 marks)
+    
     /// <summary>
     /// reverses the string that calls this method
     /// </summary>

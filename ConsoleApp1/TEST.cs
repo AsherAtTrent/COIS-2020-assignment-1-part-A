@@ -1,4 +1,6 @@
-﻿public class assignment1
+﻿using System.Runtime.Serialization;
+
+public class assignment1
 {
     public static void Main()
     {
@@ -11,7 +13,7 @@
         
         while (mainmenu)
         {
-            Console.WriteLine("press x to exit, press a for assignment a, press b for assignment b");
+            Console.WriteLine("press x to exit \npress a for assignment a \npress b for assignment b");
             keyinfo = Console.ReadKey();
             if (keyinfo.KeyChar == 'a')
             {
@@ -37,13 +39,32 @@
         bool focused = true;
         while (focused)
         {
-            Console.WriteLine("press x to exit to main menu, press 0 for userinput");
+            Console.WriteLine("press x to exit to main menu \npress 0 for userinput");
             keyinfo = Console.ReadKey();
             if (keyinfo.KeyChar == '0')
             {
-                Console.Clear();
-                Puzzle p = new Puzzle(5);
-                p.Initialize(1);
+
+                string sizeMessage = "Please input a non-zero number for length of square grid, and press enter";
+                int puzzleSize;
+
+                do
+                {
+                    puzzleSize = numberChecker(sizeMessage);
+                } while (!(puzzleSize > 0)); //checks to see if entered value is greater than 0 to avoid exception throw
+
+
+                Puzzle p = new Puzzle(puzzleSize);
+
+                string blackSqMessage = "Please input number of black squares not greater than number of squares in grid";
+                int blackSquares;
+
+                do
+                {
+                    blackSquares = numberChecker(blackSqMessage);
+                } while (blackSquares < 0 || blackSquares > (puzzleSize*puzzleSize));//checks to see if entered value is less than 0 or greater than number of squares to avoid exception
+
+                p.Initialize(blackSquares);
+
                 Console.WriteLine(p.Symmetric());
                 Console.WriteLine(p.Sym());
                 p.PrintGrid();
@@ -64,6 +85,7 @@
     public void menuB(ConsoleKeyInfo keyinfo)
     {
         char[] arr = { 'a', 'b', 'c', 'd' };
+
         MyString s = new MyString(arr);
         s.Print();
         Console.WriteLine(s.IndexOf('a'));
@@ -87,6 +109,20 @@
         Console.WriteLine(test3.Equals(test4));
         MyString? v = null;
         Console.WriteLine("when comparing against null answer is: "+ s.Equals(v));
+    }
+
+    public int numberChecker(string s)
+    {
+        int number;
+        Console.Clear();
+        Console.WriteLine(s);
+        while (!int.TryParse(Console.ReadLine(), out number))
+        {
+            Console.Clear();
+            Console.WriteLine(s);
+        }
+        Console.Clear();
+        return number;
     }
 
 }
