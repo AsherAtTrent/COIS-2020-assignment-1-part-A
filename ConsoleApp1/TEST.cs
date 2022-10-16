@@ -2,6 +2,9 @@
 
 public class assignment1
 {
+    /// <summary>
+    /// this is only to let examiners test this assignment1 and assignment2
+    /// </summary>
     public static void Main()
     {
         //Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
@@ -33,6 +36,12 @@ public class assignment1
             }
         } while (mainmenu);
     }
+
+    /// <summary>
+    /// seperates MenuA, which contains partA and helps test it using user input.
+    /// </summary>
+    /// 
+    /// <param name="keyinfo"></param>
     public void MenuA(ConsoleKeyInfo keyinfo)
     {
         Console.Clear();
@@ -51,7 +60,7 @@ public class assignment1
                 {
                     puzzleSize = NumberChecker(sizeMessage);
                 } while (!(puzzleSize > 0)); //checks to see if entered value is greater than 0 to avoid exception throw
-
+                
 
                 Puzzle p = new Puzzle(puzzleSize);
 
@@ -91,6 +100,11 @@ public class assignment1
         } while (focused);
         Console.Clear();
     }
+    /// <summary>
+    /// seperates menuB, which holds partB, and helps test with user input, as well as giving some own basic test cases
+    /// </summary>
+    /// 
+    /// <param name="keyinfo"></param>
     public void MenuB(ConsoleKeyInfo keyinfo)
     {
         Console.Clear();
@@ -127,11 +141,13 @@ public class assignment1
 
                 Console.WriteLine(test3.Equals(test4));
                 MyString? v = null;
+
                 Console.WriteLine("when comparing against null answer is: " + s.Equals(v));
             }
             else if(keyinfo.KeyChar == 'b'){
                 Console.Clear();
                 Console.WriteLine("type first list of characters, and press enter");
+                
                 char[] arr1 = Console.ReadLine().ToCharArray();
 
                 Console.WriteLine("type second list of characters, and press enter");
@@ -257,15 +273,24 @@ public class assignment1
         Console.Clear();
     }
 
-    public int NumberChecker(string s)
+    /// <summary>
+    /// helper method for MenuA which takes in a message as a string parameter.
+    /// takes in input from user and ensures it can be parsed as an int, if not parsed it plays the message.
+    /// returns the number inputted from user once the program is able to parse it as a int
+    /// </summary>
+    /// 
+    /// <param name="s"></param>
+    /// 
+    /// <returns></returns>
+    public int NumberChecker(string message)
     {
         int number;
         Console.Clear();
-        Console.WriteLine(s);
+        Console.WriteLine(message);
         while (!int.TryParse(Console.ReadLine(), out number))
         {
             Console.Clear();
-            Console.WriteLine(s);
+            Console.WriteLine(message);
         }
         Console.Clear();
         return number;

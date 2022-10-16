@@ -3,7 +3,7 @@
     private class Node
     {
         public char item;
-        public Node next;
+        public Node? next;
 
 
         //constructs a node with the next set to null 
@@ -42,7 +42,7 @@
     public void Reverse() //uses first in last out principle of a stack to reverse myString
     {
         Stack<char> S = new Stack<char>(); 
-        Node p = front.next;
+        Node? p = front.next;
 
         while (p != null) // goes through each node adding it to the stack
         {
@@ -70,7 +70,7 @@
     /// <returns>int</returns>
     public int IndexOf(char c)
     {
-        Node p = front.next;
+        Node? p = front.next;
         int index = -1;
         while(p != null) // goes through the node full not, if it finds an instnace of c, breaks out early and returns it
         {
@@ -93,14 +93,15 @@
 
     
     /// <summary>
-    /// Return true if obj is both of type MyString and the same as this instance; otherwise false
+    /// Returns true if obj is both of type MyString and all characters are equal to characters of this instance; otherwise false
     /// </summary>
     /// 
     /// <param name="obj"></param>
     /// 
     /// <returns>boolean</returns>
-    public override bool Equals(object obj) 
+    public override bool Equals(object? obj) 
     {
+        
         if (obj is MyString) // if obj is Mystring, checks against null objects as well!
         {
             MyString toCompare = (MyString)obj; // casts obj as mystring
@@ -109,13 +110,13 @@
                 if (toCompare.length == 0){ // if their length is zero theyre equal
                     return true;
                 }
-                Node indx = toCompare.front; 
-                Node indy = this.front;
+                Node? indx = toCompare.front; 
+                Node? indy = this.front;
                 while(indx.item == indy.item) // while both items are equal keep looping 
                 {
                     indx = indx.next;
                     indy = indy.next;
-                    if(indx == null)//if one reaches null, they are both equal
+                    if(indx == null || indy ==null)//if one reaches null, they are both equal
                     {
                         return true;
                     }
@@ -132,7 +133,7 @@
     public void Print() 
     {
         
-        Node p = front.next;
+        Node? p = front.next;
         while (p != null) // loops through each node one by one and prints out ech item one by one
         {
             Console.Write(p.item);

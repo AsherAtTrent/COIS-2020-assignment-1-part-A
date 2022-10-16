@@ -18,8 +18,8 @@ public class Puzzle
 
     private int M;
 
-    private int[] acrossClues;
-    private int[] downClues;
+    private int[] acrossClues = new int[0];
+    private int[] downClues = new int[0];
 
     /// <summary>
     /// Takes in a parameter N, then creates an N by N grid of initially all white squares.
