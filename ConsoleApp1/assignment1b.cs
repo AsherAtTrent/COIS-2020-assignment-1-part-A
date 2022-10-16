@@ -61,7 +61,8 @@
 
 
     /// <summary>
-    ///  Return the index of the first occurrence of c in this instance; otherwise -1 
+    ///  Return the index of the first occurrence of c in this instance; otherwise -1
+    ///  Index starts at 0
     /// </summary>
     /// 
     /// <param name="c"></param>
@@ -80,7 +81,7 @@
             }
             p=p.next;
         }
-        return index; // if not found earlier returns -1
+        return -1; // if not found earlier returns -1
     }
 
 
@@ -126,12 +127,12 @@
     }
 
     /// <summary>
-    /// print out the insance of mystring that called this function
+    /// print out the insance of mystring that called this function.
     /// </summary>
     public void Print() 
     {
+        
         Node p = front.next;
-        Console.WriteLine(); 
         while (p != null) // loops through each node one by one and prints out ech item one by one
         {
             Console.Write(p.item);

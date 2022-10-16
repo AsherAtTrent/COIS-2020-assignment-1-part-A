@@ -97,9 +97,9 @@ public class assignment1
         bool focused = true;
         do
         {
-            Console.WriteLine("press x to exit to main menu \npress b for userinput\ntype b for test cases ");
+            Console.WriteLine("press x to exit to main menu \npress b for userinput\ntype a for test cases ");
             keyinfo = Console.ReadKey();
-            if (keyinfo.KeyChar == 'b')
+            if (keyinfo.KeyChar == 'a')
             {
                 Console.Clear();
 
@@ -129,7 +129,7 @@ public class assignment1
                 MyString? v = null;
                 Console.WriteLine("when comparing against null answer is: " + s.Equals(v));
             }
-            else if(keyinfo.KeyChar == 'a'){
+            else if(keyinfo.KeyChar == 'b'){
                 Console.Clear();
                 Console.WriteLine("type first list of characters, and press enter");
                 char[] arr1 = Console.ReadLine().ToCharArray();
@@ -137,28 +137,101 @@ public class assignment1
                 Console.WriteLine("type second list of characters, and press enter");
                 char[] arr2 = Console.ReadLine().ToCharArray();
 
-                Boolean userinput = true;
+                MyString s1 = new MyString(arr1);
+                MyString s2 = new MyString(arr2);
 
+                Boolean userinput = true;
+                Console.Clear();
                 do
                 {
+                    Console.WriteLine("1st String:");
+                    s1.Print();
+                    Console.WriteLine("2nd String:");
+                    s2.Print();
                     Console.WriteLine("press x to exit to Menu B \npress v for reverse\ntype e equal\npress i for index of character \npress r for remove ");
                     keyinfo = Console.ReadKey();
 
                     if (keyinfo.KeyChar == 'v')
                     {
-                        
+                        Console.Clear();
+                        Console.WriteLine("1st String:");
+                        s1.Print();
+                        Console.WriteLine("2nd String:");
+                        s2.Print();
+                        Console.WriteLine("press 1 for string 1 \npress 2 for string 2 \npress 3 for both strings \npress any other key to exit");
+                        keyinfo = Console.ReadKey();
+                        if (keyinfo.KeyChar == '1')
+                        {
+                            Console.Clear();
+                            s1.Reverse();
+                        }
+                        else if (keyinfo.KeyChar == '2')
+                        {
+                            Console.Clear();
+                            s2.Reverse();
+                        }
+                        else if (keyinfo.KeyChar == '3')
+                        {
+                            Console.Clear();
+                            s1.Reverse();
+                            s2.Reverse();
+                        }
                     }
                     else if (keyinfo.KeyChar == 'e')
                     {
-                        
+                        Console.Clear();
+                        Console.WriteLine("Does 1st string equal 2nd string: {0}", s1.Equals(s2)); ;
+
                     }
                     else if (keyinfo.KeyChar == 'i')
                     {
-
+                        Console.Clear();
+                        Console.WriteLine("1st String:");
+                        s1.Print();
+                        Console.WriteLine("2nd String:");
+                        s2.Print();
+                        Console.WriteLine("press 1 for string 1 \npress 2 for string 2 \npress 3 for both strings \npress any other key to exit");
+                        keyinfo = Console.ReadKey();
+                        char c;
+                        if (keyinfo.KeyChar == '1')
+                        {
+                            Console.Clear();
+                            Console.WriteLine("1st String:");
+                            s1.Print();
+                            Console.WriteLine("press any character to search for: ");
+                            c = Console.ReadKey().KeyChar;
+                            Console.Clear();
+                            Console.WriteLine("The index of {0} in string 1 is: {1}", c, s1.IndexOf(c));
+                        }
+                        else if (keyinfo.KeyChar == '2')
+                        {
+                            Console.Clear();
+                            Console.WriteLine("2nd String:");
+                            s2.Print();
+                            Console.WriteLine("press any character to search for: ");
+                            c = Console.ReadKey().KeyChar;
+                            Console.Clear();
+                            Console.WriteLine("The index of {0} in string 2 is: {1}", c, s2.IndexOf(c));
+                        }
+                        else if (keyinfo.KeyChar == '3')
+                        {
+                            Console.Clear();
+                            Console.WriteLine("1st String:");
+                            s1.Print();
+                            Console.WriteLine("2nd String:");
+                            s2.Print();
+                            Console.WriteLine("press any character to search for: ");
+                            c = Console.ReadKey().KeyChar;
+                            Console.Clear();
+                            Console.WriteLine("The index of {0} in string 1 is: {1}", c, s1.IndexOf(c));
+                            Console.WriteLine("The index of {0} in string 2 is: {1}", c, s2.IndexOf(c));
+                        }
                     }
                     else if (keyinfo.KeyChar == 'r')
                     {
-
+                        //TODO
+                        Console.Clear();
+                        Console.WriteLine("not implemented yet");
                     }
                     else if (keyinfo.KeyChar == 'x')
                     {
@@ -170,7 +243,6 @@ public class assignment1
                     }
                 } while (userinput);
                 
-
 
             }
             else if (keyinfo.KeyChar == 'x')
@@ -198,5 +270,6 @@ public class assignment1
         Console.Clear();
         return number;
     }
+
 
 }
