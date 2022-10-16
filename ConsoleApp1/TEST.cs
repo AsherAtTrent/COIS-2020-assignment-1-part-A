@@ -160,20 +160,13 @@ public class assignment1
                 Console.Clear();
                 do
                 {
-                    Console.WriteLine("1st String:");
-                    s1.Print();
-                    Console.WriteLine("2nd String:");
-                    s2.Print();
+                    listStrings(s1, s2);
                     Console.WriteLine("press x to exit to Menu B \npress v for reverse\ntype e equal\npress i for index of character \npress r for remove ");
                     keyinfo = Console.ReadKey();
 
                     if (keyinfo.KeyChar == 'v')
                     {
-                        Console.Clear();
-                        Console.WriteLine("1st String:");
-                        s1.Print();
-                        Console.WriteLine("2nd String:");
-                        s2.Print();
+                        listStrings(s1, s2);
                         Console.WriteLine("press 1 for string 1 \npress 2 for string 2 \npress 3 for both strings \npress any other key to exit");
                         keyinfo = Console.ReadKey();
                         if (keyinfo.KeyChar == '1')
@@ -201,19 +194,13 @@ public class assignment1
                     }
                     else if (keyinfo.KeyChar == 'i')
                     {
-                        Console.Clear();
-                        Console.WriteLine("1st String:");
-                        s1.Print();
-                        Console.WriteLine("2nd String:");
-                        s2.Print();
+                        listStrings(s1, s2);
                         Console.WriteLine("press 1 for string 1 \npress 2 for string 2 \npress 3 for both strings \npress any other key to exit");
                         keyinfo = Console.ReadKey();
                         char c;
                         if (keyinfo.KeyChar == '1')
                         {
-                            Console.Clear();
-                            Console.WriteLine("1st String:");
-                            s1.Print();
+                            listStrings(s1);
                             Console.WriteLine("press any character to search for: ");
                             c = Console.ReadKey().KeyChar;
                             Console.Clear();
@@ -221,9 +208,8 @@ public class assignment1
                         }
                         else if (keyinfo.KeyChar == '2')
                         {
-                            Console.Clear();
-                            Console.WriteLine("2nd String:");
-                            s2.Print();
+
+                            listStrings(s2);
                             Console.WriteLine("press any character to search for: ");
                             c = Console.ReadKey().KeyChar;
                             Console.Clear();
@@ -231,11 +217,7 @@ public class assignment1
                         }
                         else if (keyinfo.KeyChar == '3')
                         {
-                            Console.Clear();
-                            Console.WriteLine("1st String:");
-                            s1.Print();
-                            Console.WriteLine("2nd String:");
-                            s2.Print();
+                            listStrings(s1, s2);
                             Console.WriteLine("press any character to search for: ");
                             c = Console.ReadKey().KeyChar;
                             Console.Clear();
@@ -245,9 +227,33 @@ public class assignment1
                     }
                     else if (keyinfo.KeyChar == 'r')
                     {
-                        //TODO
                         Console.Clear();
-                        Console.WriteLine("not implemented yet");
+                        Console.WriteLine("press 1 for string 1 \npress 2 for string 2 \npress 3 for both strings \npress any other key to exit");
+                        keyinfo = Console.ReadKey();
+                        char c;
+                        if (keyinfo.KeyChar == '1')
+                        {
+                            listStrings(s1);
+                            Console.WriteLine("press any character to remove: ");
+                            c = Console.ReadKey().KeyChar;
+                            s1.Remove(c);
+                            
+                        }
+                        else if (keyinfo.KeyChar == '2')
+                        {
+                            listStrings(s2);
+                            Console.WriteLine("press any character to remove: ");
+                            c = Console.ReadKey().KeyChar;
+                            s2.Remove(c);
+                        }
+                        else if (keyinfo.KeyChar == '3')
+                        {
+                            listStrings(s1,s2);
+                            Console.WriteLine("press any character to remove: ");
+                            c = Console.ReadKey().KeyChar;
+                            s1.Remove(c);
+                            s2.Remove(c);
+                        }
                     }
                     else if (keyinfo.KeyChar == 'x')
                     {
@@ -279,9 +285,9 @@ public class assignment1
     /// returns the number inputted from user once the program is able to parse it as a int
     /// </summary>
     /// 
-    /// <param name="s"></param>
+    /// <param name="message"></param>
     /// 
-    /// <returns></returns>
+    /// <returns>int</returns>
     public int NumberChecker(string message)
     {
         int number;
@@ -295,6 +301,25 @@ public class assignment1
         Console.Clear();
         return number;
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="s1"></param>
+    /// <param name="s2"></param>
+    public void listStrings(MyString s1, MyString s2)
+    {
+        Console.Clear();
+        Console.WriteLine("1st String:");
+        s1.Print();
+        Console.WriteLine("2nd String:");
+        s2.Print();
+    }
 
+    public void listStrings(MyString s1)
+    {
+        Console.Clear();
+        Console.WriteLine("selected String:");
+        s1.Print();
+    }
 
 }

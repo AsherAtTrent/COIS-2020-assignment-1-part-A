@@ -61,7 +61,7 @@
 
 
     /// <summary>
-    ///  Return the index of the first occurrence of c in this instance; otherwise -1
+    ///  Return the index of the first occurrence of a given character inside this MyString instance; otherwise -1.
     ///  Index starts at 0
     /// </summary>
     /// 
@@ -85,13 +85,30 @@
     }
 
 
-    // Remove all occurrences of c from this instance (4 marks)
-    public void Remove(char c)
+    /// <summary>
+    /// removes all instances of a given character
+    /// </summary>
+    /// 
+    /// <param name="characterToRemove"></param>
+    public void Remove(char characterToRemove)
     {
-        //TODO
+        Node p = front;
+
+        while (p.next!= null)
+        {
+            if(p.next.item == characterToRemove)
+            {
+                p.next = p.next.next;
+            }
+            else
+            {
+                p = p.next;
+            }
+
+        }
     }
 
-    
+
     /// <summary>
     /// Returns true if obj is both of type MyString and all characters are equal to characters of this instance; otherwise false
     /// </summary>
