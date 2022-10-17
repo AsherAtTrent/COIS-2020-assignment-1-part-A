@@ -76,15 +76,15 @@ public class assignment1
                 {
                     Console.Clear();
                     p.Initialize(blackSquares);
-                    Console.WriteLine(p.Symmetric());
+                    Console.WriteLine("Is the grid symmetrical: " + p.Symmetric());
                     p.Number();
                     Console.WriteLine();
                     p.PrintGrid();
                     p.PrintClues();
-                    Console.WriteLine("press x to exit to user input \npress r to replay ");
+                    Console.WriteLine("press any key to exit to user input \npress r to replay ");
                 } while (Console.ReadKey().KeyChar == 'r');
-                
-                
+
+                Console.Clear();
             }
             else if (keyinfo.KeyChar == 'x')
             {
@@ -119,12 +119,14 @@ public class assignment1
 
                 MyString s = new MyString(arr);
                 s.Print();
-                Console.WriteLine(s.IndexOf('a'));
-                Console.WriteLine(s.IndexOf('b'));
-                Console.WriteLine(s.IndexOf('c'));
-                Console.WriteLine(s.IndexOf('d'));
+                Console.WriteLine("position of a is " + s.IndexOf('a'));
+                Console.WriteLine("position of b is " + s.IndexOf('b'));
+                Console.WriteLine("position of c is " + s.IndexOf('c'));
+                Console.WriteLine("position of d is " + s.IndexOf('d'));
+                Console.WriteLine("reversing first Mystring...");
                 s.Reverse();
                 s.Print();
+                Console.WriteLine("reversing first Mystring...");
                 s.Reverse();
                 s.Print();
                 MyString test = new MyString(arr);
@@ -134,12 +136,22 @@ public class assignment1
                 MyString test2 = new MyString(b);
                 MyString test3 = new MyString(c);
                 MyString test4 = new MyString(d);
-                Console.WriteLine(s.Equals(test));
-                Console.WriteLine(s.Equals(test2));
 
-                Console.WriteLine(test3.Equals(test4));
+                Console.WriteLine("first test Mystring: ");
+                test.Print();
+
+                Console.WriteLine("second test Mystring: ");
+                test2.Print();
+                Console.WriteLine("third test Mystring: ");
+                test3.Print();
+                Console.WriteLine("fourth test Mystring: ");
+                test4.Print();
+
+                Console.WriteLine("does first Mystring equal first test Mystring: " + s.Equals(test));
+                Console.WriteLine("does first Mystring equal second test Mystring: " + s.Equals(test2));
+                Console.WriteLine("does third test Mystring equal fourth test Mystring: " + test3.Equals(test4));
+
                 MyString? v = null;
-
                 Console.WriteLine("when comparing against null answer is: " + s.Equals(v));
             }
             else if(keyinfo.KeyChar == 'b'){
