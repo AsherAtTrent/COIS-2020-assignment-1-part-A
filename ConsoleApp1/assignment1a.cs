@@ -64,7 +64,7 @@ public class Puzzle
     /// <exception cref="InvalidOperationException"></exception>
     public void Initialize(int M)
     {
-        if (this.M != 0) //checks to see if black squares were added to this already, if so resets puzzle object
+        if (this.M != 0 || acrossClues.Count != 0 || downClues.Count != 0) //checks to see if black squares, across clues, or down clues were already added, recreates if so
         {
             init(N);
         }
@@ -211,23 +211,34 @@ public class Puzzle
     public void PrintGrid()
     {
         int digitsAmount;
-        int highestAcross = acrossClues[acrossClues.Count-1];
-        int highestDown = downClues[downClues.Count - 1];
+        int highestAcross = 0;
+        int highestDown = 0;
+
+        if (acrossClues.Count != 0)
+        {
+            highestAcross = acrossClues[acrossClues.Count - 1];
+        }
+        if (downClues.Count != 0)
+        {
+            highestDown = downClues[downClues.Count - 1];
+        }
+
         string spaces = "";
-        Console.WriteLine("highest across: " + highestAcross);
-        Console.WriteLine("highest down: " + highestDown);
-        if (highestAcross > highestDown)
+
+        if (highestAcross ==0 && highestDown ==0)
+        {
+            digitsAmount = 1;
+        }
+        else if (highestAcross > highestDown)
         {
             digitsAmount = (int)Math.Floor(Math.Log10(highestAcross) + 1);
-            Console.WriteLine("amount of digits: " + digitsAmount);
         }
         else
         {
             digitsAmount = (int)Math.Floor(Math.Log10(highestDown) + 1);
-            Console.WriteLine("amount of digits: " + digitsAmount);
         }
 
-       
+        
         for (int i = 1;i!=digitsAmount;i++)
         {
             spaces += " ";
@@ -272,36 +283,12 @@ public class Puzzle
         Console.WriteLine();
     }
 
-    // Return true if the grid is symmetric (à la New York Times); false otherwise (4 marks)
-
     /// <summary>
     /// checks if the puzzle object that called this method has 180 degree rotational symmetry. returns true if symmetrical false otherwise.
     /// </summary>
     /// 
     /// <returns>boolean</returns>
-    public bool Symmetric()
-    {
-        //nested forloop goes through each item, until middle row has been compared   
-        for (int j = 0; j<= (N/2); j++) // n/2 truncates to give middlerow
-        {
-            for (int i = 0; i <N; i++)
-            {
-                if (grid[j, i].Color != grid[(N - 1) - j, (N - 1) - i].Color)//compares current item, to its 180 degree counterpart
-                {
-                    return false;
-                }   
-            }  
-        }
-        
-        return true;   
-    }
-
-    /// <summary>
-    /// checks if the puzzle object that called this method has 180 degree rotational symmetry. returns true if symmetrical false otherwise.
-    /// </summary>
-    /// 
-    /// <returns>boolean</returns>
-    public bool Sym() //goes through half the square objects in the puzzle grid, comparing against its 180 degree counterpart
+    public bool Symmetric() //goes through half the square objects in the puzzle grid, comparing against its 180 degree counterpart
     {
         //one before the middle element of an odd size 2d array, or the final element in the middle row of an even size 2d array (half -1 or half of all squares respectively)
         //this calculation ensures all squares with a 180 degree counterpart are compared exactly once only

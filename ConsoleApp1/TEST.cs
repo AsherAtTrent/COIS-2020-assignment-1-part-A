@@ -59,7 +59,7 @@ public class assignment1
                 do
                 {
                     puzzleSize = NumberChecker(sizeMessage);
-                } while (!(puzzleSize > 0)); //checks to see if entered value is greater than 0 to avoid exception throw
+                } while (!(puzzleSize > 1)); //checks to see if entered value is greater than 1 to avoid exception throw
                 
 
                 Puzzle p = new Puzzle(puzzleSize);
@@ -77,7 +77,6 @@ public class assignment1
                     Console.Clear();
                     p.Initialize(blackSquares);
                     Console.WriteLine(p.Symmetric());
-                    Console.WriteLine(p.Sym());
                     p.Number();
                     Console.WriteLine();
                     p.PrintGrid();
@@ -85,8 +84,6 @@ public class assignment1
                     Console.WriteLine("press x to exit to user input \npress r to replay ");
                 } while (Console.ReadKey().KeyChar == 'r');
                 
-                
-
                 
             }
             else if (keyinfo.KeyChar == 'x')
