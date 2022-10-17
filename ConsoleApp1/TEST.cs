@@ -3,7 +3,7 @@
 public class assignment1
 {
     /// <summary>
-    /// this is only to let examiners test this assignment1 and assignment2
+    /// this will run assignement1a and assignment1b to let examiners mark this code.
     /// </summary>
     public static void Main()
     {
@@ -13,7 +13,7 @@ public class assignment1
         ConsoleKeyInfo keyinfo;
         bool mainmenu = true;
 
-
+        //uses booleans to figure out what part of the menu the user wants to be on
         do
         {
             Console.WriteLine("press x to exit \npress a for assignment a \npress b for assignment b");
@@ -82,7 +82,7 @@ public class assignment1
                     p.PrintGrid();
                     p.PrintClues();
                     Console.WriteLine("press any key to exit to user input \npress r to replay ");
-                } while (Console.ReadKey().KeyChar == 'r');
+                } while (Console.ReadKey().KeyChar == 'r'); // will keep remaking the grid based on currently inputed black squares and grid size if user presses r, otherwise exits out
 
                 Console.Clear();
             }
@@ -111,6 +111,8 @@ public class assignment1
         {
             Console.WriteLine("press x to exit to main menu \npress b for userinput\ntype a for test cases ");
             keyinfo = Console.ReadKey();
+
+            //this will be test cases that have been prewritten
             if (keyinfo.KeyChar == 'a')
             {
                 Console.Clear();
@@ -154,6 +156,8 @@ public class assignment1
                 MyString? v = null;
                 Console.WriteLine("when comparing against null answer is: " + s.Equals(v));
             }
+
+            //these will be user input so examiners can test on their own specific characters combinations
             else if(keyinfo.KeyChar == 'b'){
                 Console.Clear();
                 Console.WriteLine("type first list of characters, and press enter");
@@ -168,6 +172,9 @@ public class assignment1
 
                 Boolean userinput = true;
                 Console.Clear();
+                
+                //will ask you to create 2 strings, then go through a list of methods
+                //there will be an option to select first,second, or both strings for the method for some of these methods (index of, remove at, etc)
                 do
                 {
                     Console.WriteLine("1st String:");
@@ -322,7 +329,7 @@ public class assignment1
         int number;
         Console.Clear();
         Console.WriteLine(message);
-        while (!int.TryParse(Console.ReadLine(), out number))
+        while (!int.TryParse(Console.ReadLine(), out number)) //will keep looping until user selects string that can be parsed to int
         {
             Console.Clear();
             Console.WriteLine(message);
@@ -331,11 +338,11 @@ public class assignment1
         return number;
     }
     /// <summary>
-    /// 
+    /// prints both strings in their current state. takes in 2 mystring paramters.
     /// </summary>
     /// <param name="s1"></param>
     /// <param name="s2"></param>
-    public void listStrings(MyString s1, MyString s2)
+    public void listStrings(MyString s1, MyString s2) 
     {
         Console.Clear();
         Console.WriteLine("1st String:");
@@ -344,6 +351,10 @@ public class assignment1
         s2.Print();
     }
 
+    /// <summary>
+    /// overloaded function of listStrings that only takes in one string parameter
+    /// </summary>
+    /// <param name="s1"></param>
     public void listStrings(MyString s1)
     {
         Console.Clear();

@@ -114,12 +114,15 @@ public class Puzzle
     // Number the crossword grid (6 marks)
     public void Number()
     {
+        //initialize across and down clues length to puzzle size
         this.acrossClues = new List<int>(N * N);
         this.downClues = new List<int>(N * N);
-        int num = 1;
-        Puzzle p = new Puzzle(N + 2);
 
-        //create a black outline around a center
+        //count numbered squares, 
+        int num = 1;
+
+        //create a puzzle with a outline of BLACK squares around a center
+        Puzzle p = new Puzzle(N + 2);
         for (int i = 0; i<N+2;i++)
         {
             p.grid[0, i].Color = TColor.BLACK;
@@ -137,7 +140,7 @@ public class Puzzle
             p.grid[i, N+1].Color = TColor.BLACK;
         }
 
-        //put grid into center
+        //put this.grid into center of new puzzle
         for (int i = 1; i != N+1; i++)
         {
             for (int j = 1; j != N+1; j++)
@@ -145,7 +148,7 @@ public class Puzzle
                 p.grid[i, j].Color = this.grid[i-1, j-1].Color;
             }
         }
-        //p.PrintGrid();
+       
         //number grid now
         for (int i = 1; i != N + 1; i++)
         {
@@ -155,21 +158,22 @@ public class Puzzle
                 if (p.grid[i,j].Color != TColor.BLACK)
                 {
                     
-                    //across
-                    if (p.grid[i,j-1].Color == TColor.BLACK && p.grid[i,j+1].Color != TColor.BLACK)
+                    //acrossClues
+                    if (p.grid[i,j-1].Color == TColor.BLACK && p.grid[i,j+1].Color != TColor.BLACK)//if spot left is black and right is not black
                     {
                        
                         this.grid[i - 1, j - 1].Number = num;
                         acrossClues.Add(num);
                         num++;     
                     }
-                    if (p.grid[i-1, j].Color == TColor.BLACK && p.grid[i+1,j].Color != TColor.BLACK)
+                    //downClues
+                    if (p.grid[i-1, j].Color == TColor.BLACK && p.grid[i+1,j].Color != TColor.BLACK)//if spot above is black and below is not black
                     {
-                        if (this.grid[i - 1, j - 1].Number != -1)
+                        if (this.grid[i - 1, j - 1].Number != -1) // if grid is already numbered, just add it to downclues
                         {
                             downClues.Add(this.grid[i - 1, j - 1].Number);
                         }
-                        else
+                        else //if its not numbered, number grid, add to downclues, and increase num
                         {
                             this.grid[i - 1, j - 1].Number = num;
                             downClues.Add(num);
@@ -210,10 +214,15 @@ public class Puzzle
     /// </summary>
     public void PrintGrid()
     {
+
+        //will first find if the highest digit is greater than 1 for formatting purposes of the boxes of the grid
+
+        //the highest amount of digits for acrossclues, down clues, and between both
         int digitsAmount;
         int highestAcross = 0;
         int highestDown = 0;
 
+        //find the last index, the highest, if the index is greater than 0
         if (acrossClues.Count != 0)
         {
             highestAcross = acrossClues[acrossClues.Count - 1];
@@ -224,11 +233,12 @@ public class Puzzle
         }
 
         string spaces = "";
-
+        //if both highest and down are 0, will make digits equal to 1
         if (highestAcross ==0 && highestDown ==0)
         {
             digitsAmount = 1;
         }
+        //otherwise will find the highest number between two and calculate the amount of digits the number has
         else if (highestAcross > highestDown)
         {
             digitsAmount = (int)Math.Floor(Math.Log10(highestAcross) + 1);
@@ -238,12 +248,14 @@ public class Puzzle
             digitsAmount = (int)Math.Floor(Math.Log10(highestDown) + 1);
         }
 
-        
+        //add spaces based on amount of digits 
         for (int i = 1;i!=digitsAmount;i++)
         {
             spaces += " ";
         }
 
+        //the function will now create boxes, added extra spaces for formatting if the highest number has more than 1 digit
+        
         for(int a = 0; a < N; a++) // makes top row of dashes and lines
             Console.Write( spaces+ " -" + spaces+ " |");
 
@@ -254,22 +266,23 @@ public class Puzzle
 
             for (int i = 0; i < N; i++)//goes through each column, using write() based on number and colour, and then to draw a line
             {
-                if (grid[j, i].Number != -1)
+                if (grid[j, i].Number != -1) // if its a numbered square
                 {
+                    // if the digits of the numbered square is greater than 1 it will will cut off the beginning spaces based on how many digits their are
                     int curDigitsAmount = (int)Math.Floor(Math.Log10(grid[j, i].Number));        
                     string numberString = " " + spaces + grid[j, i].Number;
-                    if (curDigitsAmount != 0)
+                    if (curDigitsAmount != 0) 
                     {
                         numberString = numberString.Substring(curDigitsAmount);
                     }
                     Console.Write(numberString);
                 }
 
-                else if (grid[j, i].Color == TColor.BLACK)
+                else if (grid[j, i].Color == TColor.BLACK)// if the square is black
                 {
                     Console.Write(spaces+" X");
                 }
-                else
+                else // if the square is a non-numbered white square
                 {
                     Console.Write(spaces +"  ");
                 }
