@@ -78,9 +78,10 @@ public class assignment1
                     p.Initialize(blackSquares);
                     Console.WriteLine(p.Symmetric());
                     Console.WriteLine(p.Sym());
+                    p.Number();
+                    Console.WriteLine();
                     p.PrintGrid();
-                    p.printSymmetric();
-
+                    p.PrintClues();
                     Console.WriteLine("press x to exit to user input \npress r to replay ");
                 } while (Console.ReadKey().KeyChar == 'r');
                 
@@ -160,7 +161,10 @@ public class assignment1
                 Console.Clear();
                 do
                 {
-                    listStrings(s1, s2);
+                    Console.WriteLine("1st String:");
+                    s1.Print();
+                    Console.WriteLine("2nd String:");
+                    s2.Print();
                     Console.WriteLine("press x to exit to Menu B \npress v for reverse\ntype e equal\npress i for index of character \npress r for remove ");
                     keyinfo = Console.ReadKey();
 
@@ -184,6 +188,10 @@ public class assignment1
                             Console.Clear();
                             s1.Reverse();
                             s2.Reverse();
+                        }
+                        else
+                        {
+                            Console.Clear();
                         }
                     }
                     else if (keyinfo.KeyChar == 'e')
@@ -224,6 +232,10 @@ public class assignment1
                             Console.WriteLine("The index of {0} in string 1 is: {1}", c, s1.IndexOf(c));
                             Console.WriteLine("The index of {0} in string 2 is: {1}", c, s2.IndexOf(c));
                         }
+                        else
+                        {
+                            Console.Clear();
+                        }
                     }
                     else if (keyinfo.KeyChar == 'r')
                     {
@@ -237,6 +249,7 @@ public class assignment1
                             Console.WriteLine("press any character to remove: ");
                             c = Console.ReadKey().KeyChar;
                             s1.Remove(c);
+                            Console.Clear();
                             
                         }
                         else if (keyinfo.KeyChar == '2')
@@ -245,6 +258,7 @@ public class assignment1
                             Console.WriteLine("press any character to remove: ");
                             c = Console.ReadKey().KeyChar;
                             s2.Remove(c);
+                            Console.Clear();
                         }
                         else if (keyinfo.KeyChar == '3')
                         {
@@ -253,11 +267,17 @@ public class assignment1
                             c = Console.ReadKey().KeyChar;
                             s1.Remove(c);
                             s2.Remove(c);
+                            Console.Clear();
+                        }
+                        else
+                        {
+                            Console.Clear();
                         }
                     }
                     else if (keyinfo.KeyChar == 'x')
                     {
                         userinput = false;
+                        Console.Clear();
                     }
                     else
                     {

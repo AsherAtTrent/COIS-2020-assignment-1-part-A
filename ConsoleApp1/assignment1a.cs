@@ -18,11 +18,12 @@ public class Puzzle
 
     private int M;
 
-    private int[] acrossClues = new int[0];
-    private int[] downClues = new int[0];
+    private List<int> acrossClues = new List<int>(0);
+    private List<int> downClues = new List<int>(0);
 
     /// <summary>
     /// Takes in a parameter N, then creates an N by N grid of initially all white squares.
+    /// Will throw exception of N is not greater than 1
     /// </summary>
     /// 
     /// <param name="N"></param>
@@ -30,8 +31,8 @@ public class Puzzle
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public Puzzle(int N)
     {
-        //throws exception if number of squares isnt atleast 1
-        if (N<0)
+        //throws exception if number of squares isnt atleast 2
+        if (N<1)
         {
             throw new ArgumentOutOfRangeException("puzzle size must be greater than 0");
         }
@@ -100,8 +101,7 @@ public class Puzzle
             //then removes it that index from list
             for (int i = M;i != 0; i--)
             {
-                int randNum = rand.Next(0,i);    
-                
+                int randNum = rand.Next(0,coords.Count);
                 string[] randCoords =  coords[randNum].Split(',') ;
                 grid[int.Parse(randCoords[0]),int.Parse( randCoords[1])].Color = TColor.BLACK; //converts string at index[0] and index[1] to x and y coords
                 coords.RemoveAt(randNum);
@@ -114,16 +114,95 @@ public class Puzzle
     // Number the crossword grid (6 marks)
     public void Number()
     {
+        this.acrossClues = new List<int>(N * N);
+        this.downClues = new List<int>(N * N);
+        int num = 1;
+        Puzzle p = new Puzzle(N + 2);
 
+        //create a black outline around a center
+        for (int i = 0; i<N+2;i++)
+        {
+            p.grid[0, i].Color = TColor.BLACK;
+        }
+        for (int i = 0; i < N + 2; i++)
+        {
+            p.grid[N+1, i].Color = TColor.BLACK;
+        }
+        for (int i = 0; i< N+2; i++)
+        {
+            p.grid[i, 0].Color = TColor.BLACK;
+        }
+        for (int i = 0; i < N + 2; i++)
+        {
+            p.grid[i, N+1].Color = TColor.BLACK;
+        }
 
+        //put grid into center
+        for (int i = 1; i != N+1; i++)
+        {
+            for (int j = 1; j != N+1; j++)
+            {
+                p.grid[i, j].Color = this.grid[i-1, j-1].Color;
+            }
+        }
+        //p.PrintGrid();
+        //number grid now
+        for (int i = 1; i != N + 1; i++)
+        {
+            for (int j = 1; j != N + 1; j++)
+            {
+                //if square is not black
+                if (p.grid[i,j].Color != TColor.BLACK)
+                {
+                    
+                    //across
+                    if (p.grid[i,j-1].Color == TColor.BLACK && p.grid[i,j+1].Color != TColor.BLACK)
+                    {
+                       
+                        this.grid[i - 1, j - 1].Number = num;
+                        acrossClues.Add(num);
+                        num++;     
+                    }
+                    if (p.grid[i-1, j].Color == TColor.BLACK && p.grid[i+1,j].Color != TColor.BLACK)
+                    {
+                        if (this.grid[i - 1, j - 1].Number != -1)
+                        {
+                            downClues.Add(this.grid[i - 1, j - 1].Number);
+                        }
+                        else
+                        {
+                            this.grid[i - 1, j - 1].Number = num;
+                            downClues.Add(num);
+                            num++;
+                            
+                        }
+                    }
+                    
+                }
+            }
+        }
+        
     }
 
 
     // Print out the numbers for the Across and Down clues (in order) (4 marks)
     public void PrintClues()
     {
+        Console.WriteLine("Across clues: ");
+        for (int i = 0; i < acrossClues.Count; i++)  //loops through the index i of across clues.
+        {
+            Console.Write(acrossClues[i] + "  ");  //prints the value of acrossClue at index i
+        }
 
+        Console.WriteLine(" "); //Blank line for asthetics
 
+        Console.WriteLine("Down clues: ");
+        for (int i = 0; i < downClues.Count; i++)  //loops through the index i of down clues.
+        {
+            Console.Write(downClues[i] + "  "); //Down clues values at index i are printed.
+
+        }
+        Console.WriteLine();
     }
     /// <summary>
     /// Prints out Puzzle object that called this method onto the console, seperating each row with dashes.
@@ -131,8 +210,31 @@ public class Puzzle
     /// </summary>
     public void PrintGrid()
     {
+        int digitsAmount;
+        int highestAcross = acrossClues[acrossClues.Count-1];
+        int highestDown = downClues[downClues.Count - 1];
+        string spaces = "";
+        Console.WriteLine("highest across: " + highestAcross);
+        Console.WriteLine("highest down: " + highestDown);
+        if (highestAcross > highestDown)
+        {
+            digitsAmount = (int)Math.Floor(Math.Log10(highestAcross) + 1);
+            Console.WriteLine("amount of digits: " + digitsAmount);
+        }
+        else
+        {
+            digitsAmount = (int)Math.Floor(Math.Log10(highestDown) + 1);
+            Console.WriteLine("amount of digits: " + digitsAmount);
+        }
+
+       
+        for (int i = 1;i!=digitsAmount;i++)
+        {
+            spaces += " ";
+        }
+
         for(int a = 0; a < N; a++) // makes top row of dashes and lines
-                Console.Write(" - |");
+            Console.Write( spaces+ " -" + spaces+ " |");
 
         //for loop that will go through each 
         for (int j = 0; j < N; j++) // goes through each row, doing a writeline to break into next line
@@ -143,25 +245,31 @@ public class Puzzle
             {
                 if (grid[j, i].Number != -1)
                 {
-                    Console.Write(" "+grid[j, i].Number);
+                    int curDigitsAmount = (int)Math.Floor(Math.Log10(grid[j, i].Number));        
+                    string numberString = " " + spaces + grid[j, i].Number;
+                    if (curDigitsAmount != 0)
+                    {
+                        numberString = numberString.Substring(curDigitsAmount);
+                    }
+                    Console.Write(numberString);
                 }
 
                 else if (grid[j, i].Color == TColor.BLACK)
                 {
-                    Console.Write(" X");
+                    Console.Write(spaces+" X");
                 }
                 else
                 {
-                    Console.Write("  ");
+                    Console.Write(spaces +"  ");
                 }
-                Console.Write(" |");
+                Console.Write(spaces + " |");
             }
 
             Console.WriteLine(); //a bottom row of dashes and lines
             for (int a = 0; a < N; a++)
-                Console.Write(" - |");
+                Console.Write( spaces+ " -" + spaces+ " |");
         }
-
+        Console.WriteLine();
     }
 
     // Return true if the grid is symmetric (à la New York Times); false otherwise (4 marks)
@@ -212,18 +320,6 @@ public class Puzzle
         return true;
     }
 
-    public void printSymmetric()
-    {
-        Console.WriteLine();
-        for (int i = N-1; i >= 0; i--)
-        {
-            for (int j = N-1; j >= 0; j--)
-            {
-                Console.Write(grid[i, j].Color + " ");
-            }
-            Console.WriteLine();
-        }
-    }
 }
 
 
